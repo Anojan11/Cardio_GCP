@@ -1,5 +1,6 @@
 import uvicorn #ASGI
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from cardios import Cardio
 import numpy as np
 import pickle
@@ -9,6 +10,17 @@ import pandas as pd
 
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 pickle_in = open("cardio_model.sav", "rb")
 classifier1 = pickle.load(pickle_in)
